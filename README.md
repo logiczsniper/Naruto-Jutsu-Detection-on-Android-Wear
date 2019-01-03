@@ -1,4 +1,9 @@
+## Naruto Jutsu Detection
 
+#### Introduction
+This is an app for Android Wear- it is intended to run on a smart watch. The app tracks your
+hand movements by means of the various sensors. If it detects a certain hand sign(s), it plays the original
+Naruto sounds for that jutsu and displays a relevant image.
 
 #### Sources
 Here are links to the original images that I modified to use for this app: <br>
