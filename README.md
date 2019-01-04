@@ -12,3 +12,5 @@ Here are links to the original images that I modified to use for this app: <br>
 3. [IDLE](https://www.reddit.com/r/Naruto/comments/2l2wta/naruto_minimalistic_fan_art_created_by_me/)
 4. [SAGE MODE](https://www.pinterest.ie/pin/348114246178464303/)
 5. [PUNCH](https://www.pinterest.ie/pin/345229127670866249/)
+6. [SEXY JUTSU](https://in.pinterest.com/pin/824581012997581421/)
+7. [SUMMONING](https://www.pinterest.ie/pin/814729388817161143/)
