@@ -14,3 +14,6 @@ Here are links to the original images that I modified to use for this app: <br>
 5. [PUNCH](https://www.pinterest.ie/pin/345229127670866249/)
 6. [SEXY JUTSU](https://in.pinterest.com/pin/824581012997581421/)
 7. [SUMMONING](https://www.pinterest.ie/pin/814729388817161143/)
+
+As this is my first android app, I struggled to get started. I used the information [here](http://www.learnandroidwear.com/sample-3/)
+to set up the main GridPagerLayout.

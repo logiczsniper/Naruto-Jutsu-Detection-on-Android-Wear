@@ -4,27 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/headband_fix"
-    android:padding="@dimen/box_inset_layout_padding"
-    tools:context=".MainActivity"
-    tools:deviceIds="wear">
+    android:background="#f56b3c" >
 
-    <FrameLayout
+    <android.support.wearable.view.GridViewPager
+        android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/inner_frame_layout_padding"
-        app:boxedEdges="all"
-        tools:ignore="MissingPrefix">
+        android:keepScreenOn="true" />
 
-        <TextView
-            android:id="@+id/text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="45dp"
-            android:text="@string/hello_world"
-            android:textColor="@color/ambient_mode_text"
-            android:textColorLink="@color/ambient_mode_text"
-            android:textSize="14sp" />
+    <android.support.wearable.view.DotsPageIndicator
+        android:id="@+id/page_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:paddingBottom="@dimen/screen_percentage_05"
+        app:dotFadeOutDuration="@integer/action_choose_expand_full_duration"
+        app:dotRadius="2px"
+        app:dotRadiusSelected="3px"
+        app:dotShadowColor="@color/ambient_mode_text"></android.support.wearable.view.DotsPageIndicator>
 
-    </FrameLayout>
 </android.support.wear.widget.BoxInsetLayout>

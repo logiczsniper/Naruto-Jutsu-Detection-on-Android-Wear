@@ -1,35 +1,63 @@
 package cz.logan.jutsudetection;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 class JutsuGesture {
 
+    /*
+    Different possible status values:
+        "active" - the gesture attempts to identify a gesture every update
+        "inactive" - the time ran out before the gesture was identified
+        "completed" - the gesture was identified
+     */
     String status = "active";
-    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-    Integer[] currentData;
-    Integer[] previousData;
-    // TODO: combine these into one ordered list(all data) of ordered lists(sets of values)
 
-    JutsuGesture(Integer[] data) {
-        this.currentData = data;
-    }
+    /*
+    Saves the time of the declaration.
+     */
+    Timestamp timestamp;
 
-    void updateData(Integer[] data) {
+    /*
+    Structure of this data package:
 
-        // TODO: have this method add to all data array
+        {
+        {ALL X VALUES}, {ALL Y VALUES}, {ALL Z VALUES}
+        }
 
-        this.previousData = this.currentData;
-        this.currentData = data;
+     */
+    ArrayList<float[]> allData = new ArrayList<>();
+
+    JutsuGesture(float[] data) {
+        allData.add(data);
+        timestamp = new Timestamp(System.currentTimeMillis());
+}
+
+    void updateData(float[] newData) {
+
+        allData.add(newData);
 
         if (((new Timestamp(System.currentTimeMillis())).getTime() - this.timestamp.getTime()) /
                 1000 >= 5) {
             // After 5 seconds, JutsuGesture ends
-            this.status = "finished";
+            this.status = "inactive";
         }
+    }
+
+    void addToAllData() {
+
     }
 
     void identificationAttempt() {
         // TODO: iterate through all data and try to match it against one of the Specific Jutsu
-        // TODO: classes. 
+        // TODO: classes.
+        for (float[] dataPackage : this.allData) {
+
+            for (float planeValue : dataPackage) {
+
+
+
+            }
+        }
     }
 }
