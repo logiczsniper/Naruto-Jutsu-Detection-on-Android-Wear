@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.wear.widget.BoxInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f56b3c" >
@@ -17,10 +16,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
-        android:paddingBottom="@dimen/screen_percentage_05"
+        android:paddingBottom="@dimen/screen_percentage_10"
         app:dotFadeOutDuration="@integer/action_choose_expand_full_duration"
-        app:dotRadius="2px"
-        app:dotRadiusSelected="3px"
-        app:dotShadowColor="@color/ambient_mode_text"></android.support.wearable.view.DotsPageIndicator>
+        app:dotRadius="2dp"
+        app:dotRadiusSelected="3dp"
+        app:dotShadowColor="@color/ambient_mode_text">
+
+    </android.support.wearable.view.DotsPageIndicator>
 
 </android.support.wear.widget.BoxInsetLayout>

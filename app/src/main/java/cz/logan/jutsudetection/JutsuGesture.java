@@ -14,24 +14,57 @@ class JutsuGesture {
     String status = "active";
 
     /*
-    Saves the time of the declaration.
-     */
-    Timestamp timestamp;
-
-    /*
     Structure of this data package:
-
-        {
-        {ALL X VALUES}, {ALL Y VALUES}, {ALL Z VALUES}
-        }
-
+        { {ALL X VALUES}, {ALL Y VALUES}, {ALL Z VALUES} }
      */
     ArrayList<float[]> allData = new ArrayList<>();
 
-    JutsuGesture(float[] data) {
+    private int threshold;
+    private Timestamp timestamp;
+    private int pagerPosition;
+    private String audioClipPath;
+    private ArrayList<float[]> jutsuData;
+
+    JutsuGesture(int pagerPosition, float[] data) {
         allData.add(data);
-        timestamp = new Timestamp(System.currentTimeMillis());
+        this.timestamp = new Timestamp(System.currentTimeMillis());
+        this.pagerPosition = pagerPosition;
+        setDataFromPosition(pagerPosition);
 }
+
+    private void setDataFromPosition(int pagerPosition) {
+        // TODO: set complex data structure based on screen
+        switch (pagerPosition) {
+            case 0:
+                this.audioClipPath = "";
+                this.threshold = 0;
+                break;
+            case 1:
+                this.audioClipPath = "";
+                this.threshold = 0;
+                break;
+            case 2:
+                this.audioClipPath = "";
+                this.threshold = 0;
+                break;
+            case 3:
+                this.audioClipPath = "";
+                this.threshold = 0;
+                break;
+            case 4:
+                this.audioClipPath = "";
+                this.threshold = 0;
+                break;
+            case 5:
+                this.audioClipPath = "";
+                this.threshold = 0;
+                break;
+            default:
+                this.audioClipPath = "";
+                this.threshold = 0;
+                break;
+        }
+    }
 
     void updateData(float[] newData) {
 
@@ -45,6 +78,11 @@ class JutsuGesture {
     }
 
     void addToAllData() {
+
+    }
+
+    // play audio clip
+    void playAudioClip() {
 
     }
 
