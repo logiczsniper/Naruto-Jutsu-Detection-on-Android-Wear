@@ -21,9 +21,6 @@ public class MainActivity extends Activity {
     private Integer[][] jutsuImages = {{R.drawable.headband_fix, R.drawable.punch, R.drawable
             .shadow_clone, R.drawable.rasengan, R.drawable.summon, R.drawable.sage_mode, R
             .drawable.sexy_jutsu}};
-    private SensorManager mSensorManager;
-    private Sensor mSensor;
-    private SensorEventListener mSensorEventListener;
     private ArrayList<JutsuGesture> activeGestures = new ArrayList<>(200);
     private int pagerPosition;
 
@@ -40,7 +37,6 @@ public class MainActivity extends Activity {
         dotsPageIndicator.setPager(pager);
 
         /*
-        TODO: pass the correct data into the init methods of the JutsuGestures inside update below
         TODO: create constants of complex data types that can represent the required data to
         qualify a certain sequence of sensor data to mean that specific jutsu. This is to be used
         when creating instances of SpecificJutsu.
@@ -50,23 +46,37 @@ public class MainActivity extends Activity {
         importantly and with greater difficulty, save the user's facing direction. The user must
         stay facing that starting direction or else recalibrate the app. This is so that I can
         get some bearings as to what direction everything is in.
-        TODO: when the screen changes iterate through active gestures and remove gestures that
-        started sensing for the gesture of the previous screen.
+        TODO: use another thread when processing jutsu gesture related things. speed up app, as well
+        as make the app cleaner. as of now, when large movements are detected the app freezes
+        while the gestures are still active. this after this step is completed, i want the app to
+        still be running well but still do not allow the user to slide the page while a gesture
+        is being recognised.
         */
 
         // getting sensor data
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
-        mSensorEventListener = new SensorEventListener() {
+        SensorManager mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        Sensor mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
+        SensorEventListener mSensorEventListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
 
                 pagerPosition = pager.getCurrentItem().x;
+                ArrayList<Float> eventValues = convertToPrimitive(event.values);
 
-                // TODO: add conditional so that only larger changes in sensor data triggers this
-                // TODO: be able to remove below comments without breaking the thing
-                // JutsuGesture mJutsuGesture = new JutsuGesture(pagerPosition, event.values);
-                // activeGestures.add(mJutsuGesture);
+                try {
+
+                    ArrayList<ArrayList<Float>> previousAddedGestureData = activeGestures.get(activeGestures.size()
+                            - 1).allData;
+                    ArrayList<Float> previousEventValues = previousAddedGestureData.get(previousAddedGestureData.size() - 1);
+                    DataAnalyser dataAnalyser = new DataAnalyser();
+
+                    if (dataAnalyser.isMajorDataChange(previousEventValues, eventValues, 0.01F)) {
+                        addJutsuGesture(eventValues);
+                    }
+
+                } catch (IndexOutOfBoundsException ibe) {
+                    addJutsuGesture(eventValues);
+                }
 
                 // remove inactive gestures, update active gestures, empty if one completes
                 ArrayList<JutsuGesture> inactiveGestures = new ArrayList<>();
@@ -79,13 +89,12 @@ public class MainActivity extends Activity {
                             inactiveGestures = activeGestures;
                             break;
                         default:
-                            currentJutsuGesture.updateData(event.values);
+                            currentJutsuGesture.updateData(eventValues);
                             break;
                     }
                 }
 
                 activeGestures.removeAll(inactiveGestures);
-                //System.out.println(activeGestures.size());
             }
 
             @Override
@@ -95,6 +104,22 @@ public class MainActivity extends Activity {
         };
 
         mSensorManager.registerListener(mSensorEventListener, mSensor, 10);
+    }
+
+    private ArrayList<Float> convertToPrimitive(float[] values) {
+        ArrayList<Float> output = new ArrayList<>();
+
+        for (float f : values) {
+            Float newF = f;
+            output.add(newF);
+        }
+
+        return output;
+    }
+
+    private void addJutsuGesture(ArrayList<Float> eventValues) {
+        JutsuGesture mJutsuGesture = new JutsuGesture(pagerPosition, eventValues);
+        activeGestures.add(mJutsuGesture);
     }
 
     // override GridPagerAdapter
