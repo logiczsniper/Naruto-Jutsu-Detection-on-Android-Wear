@@ -22,6 +22,7 @@ public class MainActivity extends Activity {
             .shadow_clone, R.drawable.rasengan, R.drawable.summon, R.drawable.sage_mode, R
             .drawable.sexy_jutsu}};
     private ArrayList<JutsuGesture> activeGestures = new ArrayList<>(200);
+    private ArrayList<Float> eventValues;
     private int pagerPosition;
 
     @Override
@@ -46,22 +47,18 @@ public class MainActivity extends Activity {
         importantly and with greater difficulty, save the user's facing direction. The user must
         stay facing that starting direction or else recalibrate the app. This is so that I can
         get some bearings as to what direction everything is in.
-        TODO: use another thread when processing jutsu gesture related things. speed up app, as well
-        as make the app cleaner. as of now, when large movements are detected the app freezes
-        while the gestures are still active. this after this step is completed, i want the app to
-        still be running well but still do not allow the user to slide the page while a gesture
-        is being recognised.
         */
 
         // getting sensor data
         SensorManager mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        assert mSensorManager != null;
         Sensor mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
         SensorEventListener mSensorEventListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
 
                 pagerPosition = pager.getCurrentItem().x;
-                ArrayList<Float> eventValues = convertToPrimitive(event.values);
+                eventValues = convertToPrimitive(event.values);
 
                 try {
 
@@ -71,30 +68,17 @@ public class MainActivity extends Activity {
                     DataAnalyser dataAnalyser = new DataAnalyser();
 
                     if (dataAnalyser.isMajorDataChange(previousEventValues, eventValues, 0.01F)) {
-                        addJutsuGesture(eventValues);
+                        addJutsuGesture();
                     }
 
                 } catch (IndexOutOfBoundsException ibe) {
-                    addJutsuGesture(eventValues);
+                    addJutsuGesture();
                 }
 
-                // remove inactive gestures, update active gestures, empty if one completes
-                ArrayList<JutsuGesture> inactiveGestures = new ArrayList<>();
-                for (JutsuGesture currentJutsuGesture : activeGestures) {
-                    switch (currentJutsuGesture.status) {
-                        case "inactive":
-                            inactiveGestures.add(currentJutsuGesture);
-                            break;
-                        case "completed":
-                            inactiveGestures = activeGestures;
-                            break;
-                        default:
-                            currentJutsuGesture.updateData(eventValues);
-                            break;
-                    }
-                }
+                // TODO: fix this so that running this actually helps the app
+                ProcessActiveGesturesThread processActiveGesturesThread = new ProcessActiveGesturesThread();
+                processActiveGesturesThread.run();
 
-                activeGestures.removeAll(inactiveGestures);
             }
 
             @Override
@@ -117,9 +101,38 @@ public class MainActivity extends Activity {
         return output;
     }
 
-    private void addJutsuGesture(ArrayList<Float> eventValues) {
+    private void addJutsuGesture() {
         JutsuGesture mJutsuGesture = new JutsuGesture(pagerPosition, eventValues);
         activeGestures.add(mJutsuGesture);
+    }
+
+    // create separate thread to process active gestures
+    class ProcessActiveGesturesThread implements Runnable {
+
+        @Override
+        public void run() {
+            // Moves the current Thread into the background
+            android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+
+            // remove inactive gestures, update active gestures, empty if one completes
+            ArrayList<JutsuGesture> inactiveGestures = new ArrayList<>();
+            for (JutsuGesture currentJutsuGesture : activeGestures) {
+                switch (currentJutsuGesture.status) {
+                    case "inactive":
+                        inactiveGestures.add(currentJutsuGesture);
+                        break;
+                    case "completed":
+                        inactiveGestures = activeGestures;
+                        break;
+                    default:
+                        currentJutsuGesture.updateData(eventValues);
+                        break;
+                }
+            }
+
+            activeGestures.removeAll(inactiveGestures);
+
+        }
     }
 
     // override GridPagerAdapter
