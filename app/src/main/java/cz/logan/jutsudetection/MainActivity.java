@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.wearable.view.DotsPageIndicator;
 import android.support.wearable.view.GridPagerAdapter;
@@ -59,25 +60,7 @@ public class MainActivity extends Activity {
 
                 pagerPosition = pager.getCurrentItem().x;
                 eventValues = convertToPrimitive(event.values);
-
-                try {
-
-                    ArrayList<ArrayList<Float>> previousAddedGestureData = activeGestures.get(activeGestures.size()
-                            - 1).allData;
-                    ArrayList<Float> previousEventValues = previousAddedGestureData.get(previousAddedGestureData.size() - 1);
-                    DataAnalyser dataAnalyser = new DataAnalyser();
-
-                    if (dataAnalyser.isMajorDataChange(previousEventValues, eventValues, 0.01F)) {
-                        addJutsuGesture();
-                    }
-
-                } catch (IndexOutOfBoundsException ibe) {
-                    addJutsuGesture();
-                }
-
-                // TODO: fix this so that running this actually helps the app
-                ProcessActiveGesturesThread processActiveGesturesThread = new ProcessActiveGesturesThread();
-                processActiveGesturesThread.run();
+                new ProcessDataThread().execute();
 
             }
 
@@ -106,13 +89,25 @@ public class MainActivity extends Activity {
         activeGestures.add(mJutsuGesture);
     }
 
-    // create separate thread to process active gestures
-    class ProcessActiveGesturesThread implements Runnable {
+    private class ProcessDataThread extends AsyncTask<Void, Void, Void> {
 
         @Override
-        public void run() {
-            // Moves the current Thread into the background
-            android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+        protected Void doInBackground(Void... voids) {
+
+            try {
+
+                ArrayList<ArrayList<Float>> previousAddedGestureData = activeGestures.get(activeGestures.size()
+                        - 1).allData;
+                ArrayList<Float> previousEventValues = previousAddedGestureData.get(previousAddedGestureData.size() - 1);
+                DataAnalyser dataAnalyser = new DataAnalyser();
+
+                if (dataAnalyser.isMajorDataChange(previousEventValues, eventValues, 0.01F)) {
+                    addJutsuGesture();
+                }
+
+            } catch (IndexOutOfBoundsException ibe) {
+                addJutsuGesture();
+            }
 
             // remove inactive gestures, update active gestures, empty if one completes
             ArrayList<JutsuGesture> inactiveGestures = new ArrayList<>();
@@ -132,6 +127,7 @@ public class MainActivity extends Activity {
 
             activeGestures.removeAll(inactiveGestures);
 
+            return null;
         }
     }
 
