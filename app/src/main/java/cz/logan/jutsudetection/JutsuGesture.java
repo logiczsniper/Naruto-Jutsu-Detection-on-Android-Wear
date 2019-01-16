@@ -15,10 +15,10 @@ class JutsuGesture {
 
     ArrayList<ArrayList<Float>> allData = new ArrayList<>();
 
-    private int threshold;
+    private float threshold;
     private Timestamp timestamp;
     private int pagerPosition;
-    private String audioClipPath;
+    private Integer audioClipResourceID;
     private ArrayList<Float[]> jutsuData;
 
     JutsuGesture(int pagerPosition, ArrayList<Float> data) {
@@ -32,31 +32,31 @@ class JutsuGesture {
         // TODO: set complex data structure based on screen
         switch (pagerPosition) {
             case 0:
-                this.audioClipPath = "";
+                this.audioClipResourceID = R.raw.headband_tighten;
                 this.threshold = 0;
                 break;
             case 1:
-                this.audioClipPath = "";
+                this.audioClipResourceID = R.raw.punch;
                 this.threshold = 0;
                 break;
             case 2:
-                this.audioClipPath = "";
+                this.audioClipResourceID = R.raw.shadow_clone;
                 this.threshold = 0;
                 break;
             case 3:
-                this.audioClipPath = "";
+                this.audioClipResourceID = R.raw.rasengan;
                 this.threshold = 0;
                 break;
             case 4:
-                this.audioClipPath = "";
+                this.audioClipResourceID = R.raw.summoning_jutsu;
                 this.threshold = 0;
                 break;
             case 5:
-                this.audioClipPath = "";
+                this.audioClipResourceID = R.raw.sage_mode;
                 this.threshold = 0;
                 break;
             default:
-                this.audioClipPath = "";
+                this.audioClipResourceID = R.raw.sexy_jutsu;
                 this.threshold = 0;
                 break;
         }

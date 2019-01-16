@@ -26,6 +26,7 @@ public class MainActivity extends Activity {
     private ArrayList<Float> eventValues;
     private int pagerPosition;
 
+    @Deprecated
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // set layout
@@ -60,7 +61,7 @@ public class MainActivity extends Activity {
 
                 pagerPosition = pager.getCurrentItem().x;
                 eventValues = convertToPrimitive(event.values);
-                new ProcessDataThread().execute();
+                new ProcessDataThread(activeGestures, eventValues, pagerPosition).execute();
 
             }
 
@@ -70,7 +71,7 @@ public class MainActivity extends Activity {
             }
         };
 
-        mSensorManager.registerListener(mSensorEventListener, mSensor, 10);
+        mSensorManager.registerListener(mSensorEventListener, mSensor, 10000);
     }
 
     private ArrayList<Float> convertToPrimitive(float[] values) {
@@ -84,12 +85,23 @@ public class MainActivity extends Activity {
         return output;
     }
 
-    private void addJutsuGesture() {
-        JutsuGesture mJutsuGesture = new JutsuGesture(pagerPosition, eventValues);
-        activeGestures.add(mJutsuGesture);
-    }
 
-    private class ProcessDataThread extends AsyncTask<Void, Void, Void> {
+    private static class ProcessDataThread extends AsyncTask<Void, Void, Void> {
+
+        private ArrayList<JutsuGesture> activeGestures;
+        private ArrayList<Float> eventValues;
+        private int pagerPosition;
+
+        ProcessDataThread (ArrayList<JutsuGesture> activeGestures, ArrayList<Float> eventValues, int pagerPosition) {
+            this.activeGestures = activeGestures;
+            this.eventValues = eventValues;
+            this.pagerPosition = pagerPosition;
+        }
+
+        private void addJutsuGesture() {
+            JutsuGesture mJutsuGesture = new JutsuGesture(pagerPosition, eventValues);
+            activeGestures.add(mJutsuGesture);
+        }
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -101,7 +113,7 @@ public class MainActivity extends Activity {
                 ArrayList<Float> previousEventValues = previousAddedGestureData.get(previousAddedGestureData.size() - 1);
                 DataAnalyser dataAnalyser = new DataAnalyser();
 
-                if (dataAnalyser.isMajorDataChange(previousEventValues, eventValues, 0.01F)) {
+                if (dataAnalyser.isMajorDataChange(previousEventValues, eventValues, 0.1F)) {
                     addJutsuGesture();
                 }
 
@@ -132,6 +144,7 @@ public class MainActivity extends Activity {
     }
 
     // override GridPagerAdapter
+    @Deprecated
     public class ImageAdapter extends GridPagerAdapter {
         final Context mContext;
 

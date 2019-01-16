@@ -1,6 +1,7 @@
 package cz.logan.jutsudetection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 class DataAnalyser {
 
@@ -18,13 +19,13 @@ class DataAnalyser {
         return false;
     }
 
-    // TODO: this should allow you to compare two
-    // ArrayList<Float> objects. Must be accessible by both this class and JutsuGesture. Will be
-    // used to assert how similar the input data is to the Jutsu data.
-    // returns average gap between each of the values (x, y, z) or total gap.
-    /*
-    ArrayList<Float> getDataGap() {
+    ArrayList<Float> getDataGap(ArrayList<Float> valuesOne, ArrayList<Float> valuesTwo) {
 
+        Float dx = Math.abs(valuesOne.get(0) - valuesTwo.get(0));
+        Float dy = Math.abs(valuesOne.get(1) - valuesTwo.get(1));
+        Float dz = Math.abs(valuesOne.get(2) - valuesTwo.get(2));
+
+        return new ArrayList<>(Arrays.asList(dx, dy, dz));
     }
-    */
+
 }
