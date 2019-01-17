@@ -13,20 +13,20 @@ class JutsuGesture {
      */
     String status = "active";
 
-    ArrayList<ArrayList<Float>> allData = new ArrayList<>();
+    private ArrayList<ArrayList<Float>> allData = new ArrayList<>();
 
     private float threshold;
     private Timestamp timestamp;
     private int pagerPosition;
     private Integer audioClipResourceID;
-    private ArrayList<Float[]> jutsuData;
+    // TODO: make this settable through the onClick listener in GridPager
+    ArrayList<ArrayList<Float>> jutsuData;
 
-    JutsuGesture(int pagerPosition, ArrayList<Float> data) {
-        allData.add(data);
+    JutsuGesture(int pagerPosition) {
         this.timestamp = new Timestamp(System.currentTimeMillis());
         this.pagerPosition = pagerPosition;
         setDataFromPosition(pagerPosition);
-}
+    }
 
     private void setDataFromPosition(int pagerPosition) {
         // TODO: set complex data structure based on screen
@@ -34,6 +34,8 @@ class JutsuGesture {
             case 0:
                 this.audioClipResourceID = R.raw.headband_tighten;
                 this.threshold = 0;
+                // TODO: use JSON to store the huge data structure that will be jutsuData
+                // this.jutsuData = ;
                 break;
             case 1:
                 this.audioClipResourceID = R.raw.punch;
@@ -64,6 +66,7 @@ class JutsuGesture {
 
     void updateData(ArrayList<Float> newData) {
 
+        // TODO: test here that: if len of allData is almost equal to the len of jutsuData
         allData.add(newData);
 
         if (((new Timestamp(System.currentTimeMillis())).getTime() - this.timestamp.getTime()) /

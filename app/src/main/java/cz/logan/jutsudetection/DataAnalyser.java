@@ -11,7 +11,6 @@ class DataAnalyser {
         for (int x = 0; x <= 2; x++) {
 
             if (Math.abs(previousEventValues.get(x) - currentSensorValues.get(x)) > buffer) {
-                System.out.println("I WANNA KNOW WHAT LOVE IS");
                 return true;
             }
         }
