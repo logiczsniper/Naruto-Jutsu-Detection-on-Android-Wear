@@ -18,6 +18,7 @@ public class MainActivity extends Activity {
 
         // set up GridViewPager & DotsPageIndicator
         GridViewPager pager = findViewById(R.id.pager);
+
         pager.setAdapter(new ImageAdapter(this, pager, (SensorManager) getSystemService(Context.SENSOR_SERVICE)));
         final DotsPageIndicator dotsPageIndicator = findViewById(R.id.page_indicator);
         dotsPageIndicator.setPager(pager);

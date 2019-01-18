@@ -20,7 +20,7 @@ class JutsuGesture {
     private int pagerPosition;
     private Integer audioClipResourceID;
     // TODO: make this settable through the onClick listener in GridPager
-    ArrayList<ArrayList<Float>> jutsuData;
+    Integer jutsuDataJsonResource;
 
     JutsuGesture(int pagerPosition) {
         this.timestamp = new Timestamp(System.currentTimeMillis());
@@ -34,32 +34,37 @@ class JutsuGesture {
             case 0:
                 this.audioClipResourceID = R.raw.headband_tighten;
                 this.threshold = 0;
-                // TODO: use JSON to store the huge data structure that will be jutsuData
-                // this.jutsuData = ;
+                this.jutsuDataJsonResource = R.raw.jutsu_data_0;
                 break;
             case 1:
                 this.audioClipResourceID = R.raw.punch;
                 this.threshold = 0;
+                this.jutsuDataJsonResource = R.raw.jutsu_data_1;
                 break;
             case 2:
                 this.audioClipResourceID = R.raw.shadow_clone;
                 this.threshold = 0;
+                this.jutsuDataJsonResource = R.raw.jutsu_data_2;
                 break;
             case 3:
                 this.audioClipResourceID = R.raw.rasengan;
                 this.threshold = 0;
+                this.jutsuDataJsonResource = R.raw.jutsu_data_3;
                 break;
             case 4:
                 this.audioClipResourceID = R.raw.summoning_jutsu;
                 this.threshold = 0;
+                this.jutsuDataJsonResource = R.raw.jutsu_data_4;
                 break;
             case 5:
                 this.audioClipResourceID = R.raw.sage_mode;
                 this.threshold = 0;
+                this.jutsuDataJsonResource = R.raw.jutsu_data_5;
                 break;
             default:
                 this.audioClipResourceID = R.raw.sexy_jutsu;
                 this.threshold = 0;
+                this.jutsuDataJsonResource = R.raw.jutsu_data_6;
                 break;
         }
     }

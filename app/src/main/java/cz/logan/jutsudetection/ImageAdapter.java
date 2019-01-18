@@ -65,6 +65,11 @@ public class ImageAdapter extends GridPagerAdapter {
                 // create the Jutsu Gesture
                 currentJutsuGesture = new JutsuGesture(pagerPosition);
 
+                // TODO: TEST REMOVE ME
+                JsonInteraction jsonInteraction = new JsonInteraction(currentJutsuGesture.jutsuDataJsonResource, mContext);
+                ArrayList<ArrayList<Float>> jsonData = jsonInteraction.readJutsuDataFromJson();
+                System.out.println(jsonData);
+
                 // start listening for sensor data
                 mSensorManager.registerListener(mSensorEventListener, mSensor, 10000);
             }
@@ -116,7 +121,6 @@ public class ImageAdapter extends GridPagerAdapter {
                     default:
                         currentJutsuGesture.updateData(eventValues);
                         // TODO: allow users to scroll slightly but push them back onto the gesture they are currently on
-                        // pager.scrollTo(pager.getCurrentItem().x, pager.getCurrentItem().y);
                         break;
                 }
             }
