@@ -5,19 +5,6 @@ import java.util.Arrays;
 
 class DataAnalyser {
 
-    boolean isMajorDataChange(ArrayList<Float> previousEventValues, ArrayList<Float>
-            currentSensorValues, float buffer) {
-
-        for (int x = 0; x <= 2; x++) {
-
-            if (Math.abs(previousEventValues.get(x) - currentSensorValues.get(x)) > buffer) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     ArrayList<Float> getDataGap(ArrayList<Float> valuesOne, ArrayList<Float> valuesTwo) {
 
         Float dx = Math.abs(valuesOne.get(0) - valuesTwo.get(0));

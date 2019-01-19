@@ -18,6 +18,7 @@ import java.util.Objects;
 @Deprecated
 public class ImageAdapter extends GridPagerAdapter {
 
+    private final Context mContext;
     private ArrayList<Float> eventValues;
     private int pagerPosition;
     private Sensor mSensor;
@@ -26,7 +27,6 @@ public class ImageAdapter extends GridPagerAdapter {
     private Integer[][] jutsuImages = {{R.drawable.headband_fix, R.drawable.punch, R.drawable
             .shadow_clone, R.drawable.rasengan, R.drawable.summon, R.drawable.sage_mode, R
             .drawable.sexy_jutsu}};
-    private final Context mContext;
     private GridViewPager pager;
     private JutsuGesture currentJutsuGesture;
 
@@ -63,12 +63,7 @@ public class ImageAdapter extends GridPagerAdapter {
                 pagerPosition = pager.getCurrentItem().x;
 
                 // create the Jutsu Gesture
-                currentJutsuGesture = new JutsuGesture(pagerPosition);
-
-                // TODO: TEST REMOVE ME
-                JsonInteraction jsonInteraction = new JsonInteraction(currentJutsuGesture.jutsuDataJsonResource, mContext);
-                ArrayList<ArrayList<Float>> jsonData = jsonInteraction.readJutsuDataFromJson();
-                System.out.println(jsonData);
+                currentJutsuGesture = new JutsuGesture(pagerPosition, mContext);
 
                 // start listening for sensor data
                 mSensorManager.registerListener(mSensorEventListener, mSensor, 10000);
@@ -119,10 +114,10 @@ public class ImageAdapter extends GridPagerAdapter {
                         currentJutsuGesture.playAudioClip();
                         break;
                     default:
-                        currentJutsuGesture.updateData(eventValues);
-                        // TODO: allow users to scroll slightly but push them back onto the gesture they are currently on
+                        new ProcessDataTask(eventValues, currentJutsuGesture).execute();
                         break;
                 }
+
             }
 
             @Override
