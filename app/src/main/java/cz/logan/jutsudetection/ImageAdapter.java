@@ -106,15 +106,18 @@ public class ImageAdapter extends GridPagerAdapter {
                 switch (currentJutsuGesture.status) {
                     case "inactive":
                         // stop listening for sensor data since it is done
+                        System.out.println("YOU FAILED");
                         sensorManager.unregisterListener(mSensorEventListener, mSensor);
                         break;
                     case "completed":
                         // stop listening for sensor data since it is done
+                        System.out.println("YOU DID IT LOGAN");
                         sensorManager.unregisterListener(mSensorEventListener, mSensor);
                         currentJutsuGesture.playAudioClip();
                         break;
                     default:
-                        new ProcessDataTask(eventValues, currentJutsuGesture).execute();
+                        currentJutsuGesture.updateData(eventValues);
+                        // new ProcessDataTask(eventValues, currentJutsuGesture).execute();
                         break;
                 }
 

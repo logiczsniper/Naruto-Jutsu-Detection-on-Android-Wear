@@ -31,39 +31,39 @@ class JutsuGesture {
     private void setDataFromPosition(int pagerPosition) {
 
         switch (pagerPosition) {
-            case 0:
+            case 0: // done
                 this.audioClipResourceID = R.raw.headband_tighten;
-                this.threshold = 0;
+                this.threshold = 6.75F;
                 this.jsonJutsuDataKey = "values_headband";
                 break;
-            case 1:
+            case 1: // done
                 this.audioClipResourceID = R.raw.punch;
-                this.threshold = 0;
+                this.threshold = 9.15F;
                 this.jsonJutsuDataKey = "values_punch";
                 break;
-            case 2:
+            case 2: // done
                 this.audioClipResourceID = R.raw.shadow_clone;
-                this.threshold = 0;
+                this.threshold = 9.95F;
                 this.jsonJutsuDataKey = "values_shadow_clone";
                 break;
-            case 3:
+            case 3: // done
                 this.audioClipResourceID = R.raw.rasengan;
-                this.threshold = 0;
+                this.threshold = 7.95F;
                 this.jsonJutsuDataKey = "values_rasengan";
                 break;
-            case 4:
+            case 4: // done
                 this.audioClipResourceID = R.raw.summoning_jutsu;
-                this.threshold = 0;
+                this.threshold = 18.80F;
                 this.jsonJutsuDataKey = "values_summoning";
                 break;
-            case 5:
+            case 5: // done
                 this.audioClipResourceID = R.raw.sage_mode;
-                this.threshold = 0;
+                this.threshold = 2.65F;
                 this.jsonJutsuDataKey = "values_sage_mode";
                 break;
-            default:
+            default: // done
                 this.audioClipResourceID = R.raw.sexy_jutsu;
-                this.threshold = 0;
+                this.threshold = 10.25F;
                 this.jsonJutsuDataKey = "values_sexy";
                 break;
         }
@@ -74,7 +74,7 @@ class JutsuGesture {
         allData.add(newData);
 
         if (((new Timestamp(System.currentTimeMillis())).getTime() - this.timestamp.getTime()) /
-                1000 >= 5) {
+                1000 >= 4) {
 
             // Assess the similarity between allData and the jutsuData in defined_jutsu_data
             JsonInteraction jsonInteraction = new JsonInteraction(jsonJutsuDataKey, context);
@@ -111,9 +111,8 @@ class JutsuGesture {
 
             }
 
-            if (outsideThresholdCount <= totalLength * 0.1) {
-                // if 90 percent or greater of the data is in alignment (within the threshold) with
-                // the jutsu data, this is classified as completed.
+            if (outsideThresholdCount <= totalLength * 0.225) {
+                // if the number of mistakes is less than 22.5 % of all data, it is accepted.
                 this.status = "completed";
             } else {
                 // else, it is not accepted and the gesture becomes inactive.

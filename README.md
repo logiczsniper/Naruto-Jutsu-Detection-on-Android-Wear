@@ -29,6 +29,8 @@ Here are links to the original images that I modified to use for this app: <br>
 7. Summoning: <br>
 [Image](https://www.pinterest.ie/pin/814729388817161143/)
 [Audio](https://www.youtube.com/watch?v=9uZgZ7BWqUo&t=24s)
+8. Icon: <br>
+[Image](https://cdn2.iconfinder.com/data/icons/ballicons-2-free/100/smart_watch-512.png)
 
 As this is my first android app, I struggled to get started. I used the information [here](http://www.learnandroidwear.com/sample-3/)
 to set up the main GridPagerLayout.
