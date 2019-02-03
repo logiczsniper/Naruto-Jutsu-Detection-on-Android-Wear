@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.wearable.view.DotsPageIndicator;
 import android.support.wearable.view.GridViewPager;
 
+
 public class MainActivity extends Activity {
 
     @Deprecated

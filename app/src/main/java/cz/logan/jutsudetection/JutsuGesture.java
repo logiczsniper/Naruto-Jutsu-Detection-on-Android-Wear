@@ -32,37 +32,37 @@ class JutsuGesture {
     private void setDataFromPosition(int pagerPosition) {
 
         switch (pagerPosition) {
-            case 0: // done
+            case 1: // done
                 this.audioClipResourceID = R.raw.headband_tighten;
                 this.threshold = 8.95F;
                 this.jsonJutsuDataKey = "values_headband";
                 this.duration = 3;
                 break;
-            case 1: // done
+            case 2: // done
                 this.audioClipResourceID = R.raw.punch;
                 this.threshold = 10.55F;
                 this.jsonJutsuDataKey = "values_punch";
                 this.duration = 2;
                 break;
-            case 2: // done
+            case 3: // done
                 this.audioClipResourceID = R.raw.shadow_clone;
                 this.threshold = 11.95F;
                 this.jsonJutsuDataKey = "values_shadow_clone";
                 this.duration = 3;
                 break;
-            case 3: // done
+            case 4: // done
                 this.audioClipResourceID = R.raw.rasengan;
                 this.threshold = 9.95F;
                 this.jsonJutsuDataKey = "values_rasengan";
                 this.duration = 4;
                 break;
-            case 4: // done
+            case 5: // done
                 this.audioClipResourceID = R.raw.summoning_jutsu;
                 this.threshold = 19.00F;
                 this.jsonJutsuDataKey = "values_summoning";
                 this.duration = 3;
                 break;
-            case 5: // done
+            case 6: // done
                 this.audioClipResourceID = R.raw.sage_mode;
                 this.threshold = 2.65F;
                 this.jsonJutsuDataKey = "values_sage_mode";

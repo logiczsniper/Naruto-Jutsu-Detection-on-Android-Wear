@@ -6,7 +6,7 @@ hand movements by means of the various sensors. If it detects a certain hand sig
 Naruto sounds for that jutsu and displays a relevant image.
 
 #### Sources
-Here are links to the original images that I modified to use for this app: <br>
+Here are links to the original resources that I modified to use for this app: <br>
 1. Rasengan: <br>
 [Image](https://www.wattpad.com/526605763-my-minimalist-artbook-069-anime-uzumaki-naruto)
 [Audio (only sound)](https://www.youtube.com/watch?v=qODByY9FJto)
@@ -31,6 +31,8 @@ Here are links to the original images that I modified to use for this app: <br>
 [Audio](https://www.youtube.com/watch?v=9uZgZ7BWqUo&t=24s)
 8. Icon: <br>
 [Image](https://cdn2.iconfinder.com/data/icons/ballicons-2-free/100/smart_watch-512.png)
+9. Background Music: <br>
+[Audio](https://www.youtube.com/watch?v=3Pt61puO3v4)
 
 As this is my first android app, I struggled to get started. I used the information [here](http://www.learnandroidwear.com/sample-3/)
 to set up the main GridPagerLayout.
