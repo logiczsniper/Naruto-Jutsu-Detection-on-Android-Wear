@@ -18,6 +18,7 @@ class JutsuGesture {
     String status = "active";
     private ArrayList<ArrayList<Float>> allData = new ArrayList<>();
     private float threshold;
+    private Integer duration;
     private Timestamp timestamp;
     private Integer audioClipResourceID;
     private String jsonJutsuDataKey;
@@ -33,38 +34,45 @@ class JutsuGesture {
         switch (pagerPosition) {
             case 0: // done
                 this.audioClipResourceID = R.raw.headband_tighten;
-                this.threshold = 6.75F;
+                this.threshold = 8.95F;
                 this.jsonJutsuDataKey = "values_headband";
+                this.duration = 3;
                 break;
             case 1: // done
                 this.audioClipResourceID = R.raw.punch;
-                this.threshold = 9.15F;
+                this.threshold = 10.55F;
                 this.jsonJutsuDataKey = "values_punch";
+                this.duration = 2;
                 break;
             case 2: // done
                 this.audioClipResourceID = R.raw.shadow_clone;
-                this.threshold = 9.95F;
+                this.threshold = 11.95F;
                 this.jsonJutsuDataKey = "values_shadow_clone";
+                this.duration = 3;
                 break;
             case 3: // done
                 this.audioClipResourceID = R.raw.rasengan;
-                this.threshold = 7.95F;
+                this.threshold = 9.95F;
                 this.jsonJutsuDataKey = "values_rasengan";
+                this.duration = 4;
                 break;
             case 4: // done
                 this.audioClipResourceID = R.raw.summoning_jutsu;
-                this.threshold = 18.80F;
+                this.threshold = 19.00F;
                 this.jsonJutsuDataKey = "values_summoning";
+                this.duration = 3;
                 break;
             case 5: // done
                 this.audioClipResourceID = R.raw.sage_mode;
                 this.threshold = 2.65F;
                 this.jsonJutsuDataKey = "values_sage_mode";
+                this.duration = 5;
                 break;
             default: // done
                 this.audioClipResourceID = R.raw.sexy_jutsu;
-                this.threshold = 10.25F;
+                this.threshold = 10.35F;
                 this.jsonJutsuDataKey = "values_sexy";
+                this.duration = 4;
                 break;
         }
     }
@@ -74,7 +82,7 @@ class JutsuGesture {
         allData.add(newData);
 
         if (((new Timestamp(System.currentTimeMillis())).getTime() - this.timestamp.getTime()) /
-                1000 >= 4) {
+                1000 >= this.duration) {
 
             // Assess the similarity between allData and the jutsuData in defined_jutsu_data
             JsonInteraction jsonInteraction = new JsonInteraction(jsonJutsuDataKey, context);
@@ -111,8 +119,8 @@ class JutsuGesture {
 
             }
 
-            if (outsideThresholdCount <= totalLength * 0.225) {
-                // if the number of mistakes is less than 22.5 % of all data, it is accepted.
+            if (outsideThresholdCount <= totalLength * 0.25) {
+                // if the number of mistakes is less than 25 % of all data, it is accepted.
                 this.status = "completed";
             } else {
                 // else, it is not accepted and the gesture becomes inactive.
