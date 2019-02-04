@@ -7,12 +7,19 @@ import android.os.Bundle;
 import android.support.wearable.view.DotsPageIndicator;
 import android.support.wearable.view.GridViewPager;
 
+/**
+ * Naruto Jutsu hand sign detection app.
+ *
+ * @author Logan Czernel
+ * @since 03-01-2019
+ */
 
 public class MainActivity extends Activity {
 
     @Deprecated
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         // set layout
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

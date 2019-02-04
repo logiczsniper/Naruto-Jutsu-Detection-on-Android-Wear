@@ -16,7 +16,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Objects;
 
-// override GridPagerAdapter
+/**
+ * The main layout of the app. A grid view pager with 1 row and 8 columns. In each column, a
+ * picture of a gesture apart from the first being the title screen.
+ */
 @Deprecated
 public class ImageAdapter extends GridPagerAdapter {
 
@@ -26,14 +29,23 @@ public class ImageAdapter extends GridPagerAdapter {
     private Sensor mSensor;
     private SensorManager mSensorManager;
     private SensorEventListener mSensorEventListener;
-    private Integer[][] backgroundImages = {{R.drawable.intro, R.drawable.headband_fix, R.drawable
-            .punch, R.drawable
-            .shadow_clone, R.drawable.rasengan, R.drawable.summon, R.drawable.sage_mode, R
-            .drawable.sexy_jutsu}};
     private GridViewPager pager;
     private JutsuGesture currentJutsuGesture;
     private MediaPlayer backgroundMusic;
 
+    private Integer[][] backgroundImages = {{R.drawable.intro, R.drawable.headband_fix, R.drawable
+            .punch, R.drawable
+            .shadow_clone, R.drawable.rasengan, R.drawable.summon, R.drawable.sage_mode, R
+            .drawable.sexy_jutsu}};
+
+    /**
+     * Starts background music for the first time, calls setUpSensors and saves other values.
+     *
+     * @param context       MainActivity.
+     * @param pager         the instance of GridViewPager.
+     * @param sensorManager the SensorManager created in onCreate.
+     * @see #setUpSensors(SensorManager)
+     */
     ImageAdapter(final Context context, GridViewPager pager, SensorManager sensorManager) {
         mContext = context;
         this.pager = pager;
@@ -58,6 +70,15 @@ public class ImageAdapter extends GridPagerAdapter {
         return currentColumn;
     }
 
+    /**
+     * Set the appropriate background image for each column, set the onClickListener. Functions
+     * of this listener are described in line with block comments.
+     *
+     * @param viewGroup the viewGroup of the class.
+     * @param row       the current row.
+     * @param col       the current column.
+     * @return ImageView the instance that was instantiated.
+     */
     @Override
     public Object instantiateItem(ViewGroup viewGroup, int row, int col) {
 
@@ -101,6 +122,13 @@ public class ImageAdapter extends GridPagerAdapter {
         return view.equals(o);
     }
 
+    /**
+     * The accelerometer provides data in the structure float[]. To work around this annoyance,
+     * this method was created that takes a float[] and returns a far more accessible object.
+     *
+     * @param values the raw linear accelerometer output.
+     * @return ArrayList<Float> the equivalent data in the new structure.
+     */
     private ArrayList<Float> convertToPrimitive(float[] values) {
         ArrayList<Float> output = new ArrayList<>();
 
@@ -112,6 +140,12 @@ public class ImageAdapter extends GridPagerAdapter {
         return output;
     }
 
+    /**
+     * In one method, most of the sensor operations are completed.
+     *
+     * @param sensorManager the sensor manager instance created in MainActivity.
+     * @see #convertToPrimitive(float[])
+     */
     private void setUpSensors(final SensorManager sensorManager) {
         this.mSensorManager = sensorManager;
         mSensor = Objects.requireNonNull(mSensorManager).getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
@@ -123,17 +157,18 @@ public class ImageAdapter extends GridPagerAdapter {
 
                 switch (currentJutsuGesture.status) {
                     case "inactive":
-                        // stop listening for sensor data since it is done
+                        // stop listening for sensor data since it is done.
                         sensorManager.unregisterListener(mSensorEventListener, mSensor);
                         backgroundMusic.setVolume(0.4F, 0.4F);
                         break;
                     case "completed":
-                        // stop listening for sensor data since it is done
+                        // stop listening for sensor data since it is done.
                         sensorManager.unregisterListener(mSensorEventListener, mSensor);
                         backgroundMusic.setVolume(0.4F, 0.4F);
                         currentJutsuGesture.playAudioClip();
                         break;
                     default:
+                        // the jutsu is not over, send it the latest data.
                         currentJutsuGesture.updateData(eventValues);
                         break;
                 }
