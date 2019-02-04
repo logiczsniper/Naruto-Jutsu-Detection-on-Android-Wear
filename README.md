@@ -64,7 +64,7 @@ If you have an android smart watch that has an accelerometer, you will be able t
 found in `JutsuDetection\app\build\outputs\apk\debug`.
 
 #### Preview
-If you would like to see the app without installing it, see [these](https://github.com/logiczsniper/Naruto-Jutsu-Detection-on-Android-Wear/screenshots) screenshots.
+If you would like to see the app without installing it, see [these](https://github.com/logiczsniper/Naruto-Jutsu-Detection-on-Android-Wear/tree/master/screenshots) screenshots.
 While they show parts of the app, the best aspect of the app is the jutsu detection followed by the sounds. Hence,
 I do not think they appropriately represent my app.
 
